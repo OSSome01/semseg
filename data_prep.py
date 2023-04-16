@@ -47,34 +47,28 @@ class RUGD(Dataset):
         # Load the list of image and label filenames
 
         self.image_filenames = sorted(glob.glob(os.path.join(self.root_dir, self.split, 'images', '*.png')))
-        # print('self.image_filenames',  os.path.join(self.root_dir, self.split, 'images'))
-        self.label_filenames = sorted(glob.glob(os.path.join(self.root_dir, 'masks', '*.png')))
-
-        # self.image_filenames = []
-        # self.label_filenames = []
-        # with open(os.path.join(self.root_dir, self.split + '.txt'), 'r') as f:
-        #     for line in f:
-        #         image_filename, label_filename = line .strip().split(' ')
-        #         self.image_filenames.append(os.path.join(self.root_dir, image_filename))
-        #         self.label_filenames.append(os.path.join(self.root_dir, label_filename))
+        self.label_filenames = sorted(glob.glob(os.path.join(self.root_dir, self.split, 'masks', '*.png')))
 
     def __len__(self):
         return len(self.image_filenames)
 
     def __getitem__(self, idx):
         # Load the image and label
+
+
         image = Image.open(self.image_filenames[idx]).convert('RGB')
         label = Image.open(self.label_filenames[idx]).convert('RGB')
 
         # Convert the label to a numpy array and apply the color map
         label = np.array(label)
         label = self.color_map[tuple(label.reshape(-1, 3)[0])]
+        print('label', torch.tensor(label).shape)
 
         # Apply the transforms to the image and label
         if self.transform is not None:
             image = self.transform(image)
         label = torch.tensor(label, dtype=torch.long)
-
+        print('label', torch.tensor(label).shape)
         return image, label
 
 # # Define the transforms to be applied to the data
