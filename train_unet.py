@@ -26,7 +26,7 @@ trainloader = DataLoader(trainset, batch_size=4, shuffle=True, num_workers=2)
 testloader = DataLoader(testset, batch_size=4, shuffle=False, num_workers=2)
 
 # Define the model
-model = UNet(num_classes=25)
+model = UNet(num_channels=3, num_classes=25)
 model.to(device)
 
 # Define the loss function and optimizer
@@ -40,7 +40,10 @@ for epoch in range(num_epochs):
     model.train()
     train_loss = 0.0
     for images, labels in trainloader:
+        print('images', images.shape)
+        print('labels', labels.shape)
         images = images.to(device)
+        labels = nn.functional.one_hot(labels.long(), 25)
         labels = labels.to(device)
         
         optimizer.zero_grad()
