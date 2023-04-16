@@ -60,15 +60,26 @@ class RUGD(Dataset):
         label = Image.open(self.label_filenames[idx]).convert('RGB')
 
         # Convert the label to a numpy array and apply the color map
+        # label = np.array(label)
+        # print(label)
+        
+        label = label.resize((256,256), resample=Image.NEAREST)
         label = np.array(label)
-        label = self.color_map[tuple(label.reshape(-1, 3)[0])]
-        print('label', torch.tensor(label).shape)
-
+        
+        # label = torch.permute(torch.tensor(label, dtype=torch.long), (2, 0, 1))
+        # print('label', label.shape)
+        # label = torch.nn.functional.interpolate(label, (256, 256), mode='nearest')
+        # label = transforms.functional.resize(torch.permute(torch.tensor(label, dtype=torch.long), (2, 0, 1)), (256, 256))
+        # label = torch.permute(label, (1, 2, 0)).reshape(-1, 3)
+        # label.reshape(-1, 3)
+        # print('label', label.shape)
+        label = torch.tensor([self.color_map[tuple(map(int, x))] for x in label], dtype=torch.long)
+        print('label', label.shape)
         # Apply the transforms to the image and label
         if self.transform is not None:
             image = self.transform(image)
         label = torch.tensor(label, dtype=torch.long)
-        print('label', torch.tensor(label).shape)
+
         return image, label
 
 # # Define the transforms to be applied to the data
