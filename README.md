@@ -16,6 +16,10 @@ Three different models were compared for semantic segmentation in challenging of
 2. **Attention U-Net**: Model enhanced with a visual attention module.
 3. **Segformer**: Model chosen for its performance potential.
 
+## Inference Outputs
+
+![Inference Output](https://github.com/OSSome01/semseg/blob/master/assets/Compiled.jpg)
+
 ## Key Findings
 
 - The hypothesis that adding a visual attention module enhances the performance of baseline models was validated.
@@ -26,6 +30,3 @@ Three different models were compared for semantic segmentation in challenging of
 
 In conclusion, this project explored attention-guided semantic segmentation models for off-road environments. The findings supported the effectiveness of incorporating visual attention, with **Segformer** emerging as the top performer. This research contributes to the development of robust and efficient methods for enhancing autonomous vehicle navigation in challenging environments.
 
-## Inference Outputs
-
-![Inference Output](https://github.com/OSSome01/semseg/blob/master/assets/Compiled.jpg)
